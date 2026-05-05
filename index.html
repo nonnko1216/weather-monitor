@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>気象図モニタリング</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+            overflow-x: auto;
+            overflow-y: auto;
+        }
+
+        .grid-container {
+                display: grid;
+                grid-template-columns: repeat(8, 1fr);
+                
+                /* 1〜3行目は400px、4〜5行目（PNG用）を800pxに設定 */
+                grid-template-rows: 400px 400px 400px 400px 400px; 
+                
+                gap: 15px;
+                width: 2200px; 
+                margin: 20px;
+                padding-bottom: 80px;
+        }
+
+        .weather-box {
+            background: #fff;
+            border: 2px solid #333;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .weather-box iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+            object-fit: contain; 
+        }
+
+        .weather-box img {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+            object-fit: contain;
+        }
+
+        .label {
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 2px 10px;
+            font-size: 16px;
+            font-weight: bold;
+            z-index: 10;
+        }
+
+        /* 配置指定 */
+/* --- 配置指定の修正 --- */
+        
+        /* 左ブロック */
+        .pos-1  { grid-column: 1; grid-row: 1; }
+        .pos-2  { grid-column: 1; grid-row: 2; }
+        .pos-3  { grid-column: 2; grid-row: 2; } 
+        .pos-11 { grid-column: 1 / span 2; grid-row: 3; }
+        .pos-A  { grid-column: 1 / span 2; grid-row: 4; }
+
+        /* 中央ブロック */
+        /* 12番の上(1-2段目)は空き */
+        .pos-12 { grid-column: 3 / span 2; grid-row: 3; }
+        .pos-B  { grid-column: 3 / span 2; grid-row: 4; }
+
+        /* 右ブロック（13番の列） */
+        .pos-8  { grid-column: 5 / span 2; grid-row: 1; }
+        .pos-7  { grid-column: 5 / span 2; grid-row: 2; }
+        .pos-13 { grid-column: 5 / span 2; grid-row: 3; }
+        .pos-C1 { grid-column: 5 / span 2; grid-row: 4; }
+        .pos-C2 { grid-column: 5 / span 2; grid-row: 5; }
+
+        /* 最右ブロック（9番を7番の右横へ） */
+        .pos-9  { grid-column: 7 / span 2; grid-row: 2; }
+        .pos-D { grid-column: 7 / span 2; grid-row: 4; }
+
+    </style>
+</head>
+<body>
+
+    <div class="grid-container">
+        <!-- 既存のファイル -->
+        <div class="weather-box pos-1">
+            <span class="label">1</span>
+            <iframe src="files/file01_AUPQ35.pdf#toolbar=0&navpanes=0"></iframe>
+        </div>
+
+        <div class="weather-box pos-2">
+            <span class="label">2</span>
+            <iframe src="files/file02_AUPQ78.pdf#toolbar=0&navpanes=0"></iframe>
+        </div>
+
+        <div class="weather-box pos-3">
+            <span class="label">3</span>
+            <iframe src="files/file03_AXFE578.pdf#toolbar=0&navpanes=0"></iframe>
+        </div>
+
+        <div class="weather-box pos-8">
+            <span class="label">8</span>
+            <iframe src="files/file08_FXFE5782.pdf#toolbar=0&navpanes=0&view=FitH"></iframe>
+        </div>
+
+        <div class="weather-box pos-7">
+            <span class="label">7</span>
+            <iframe src="files/file07_FXFE502.pdf#toolbar=0&navpanes=0&view=FitH"></iframe>
+        </div>
+
+        <div class="weather-box pos-9">
+            <span class="label">9</span>
+            <iframe src="files/file09_FXJP854.pdf#toolbar=0&navpanes=0&view=FitH"></iframe>
+        </div>
+
+        <!-- 追加：11番、12番、13番 -->
+        <div class="weather-box pos-11">
+            <span class="label">11</span>
+            <iframe src="files/file11_weather_yesterday_21.pdf#toolbar=0&navpanes=0&view=FitW"></iframe>
+        </div>
+
+        <div class="weather-box pos-12">
+            <span class="label">12</span>
+            <iframe src="files/file12_weather_today_latest.pdf#toolbar=0&navpanes=0&view=FitW"></iframe>
+        </div>
+
+        <div class="weather-box pos-13">
+            <span class="label">13</span>
+            <iframe src="files/file13_FSAS24_COLOR_ASIA.pdf#toolbar=0&navpanes=0&view=FitW"></iframe>
+        </div>
+
+        <!-- 追加：A~D -->
+        <div class="weather-box pos-A">
+            <span class="label">A</span>
+            <!-- iframe ではなく img タグを使用 -->
+            <img src="files/fileA_FBJP.png" style="width: 100%; height: 100%; object-fit: contain;">
+        </div>
+        <div class="weather-box pos-B">
+            <span class="label">B</span>
+            <img src="files/fileB_low_level_sigwx.png" style="width: 100%; height: 100%; object-fit: contain;">
+        </div>
+        <div class="weather-box pos-C1">
+            <span class="label">C1</span>
+            <img src="files/fileC1_low_level_sigwx_miyagi.png" style="width: 100%; height: 100%; object-fit: contain;">
+        </div>
+        <div class="weather-box pos-C2">
+            <span class="label">C2</span>
+            <img src="files/fileC2_low_level_sigwx_fukushima.png" style="width: 100%; height: 100%; object-fit: contain;">
+        </div>
+        <div class="weather-box pos-D">
+            <span class="label">D</span>
+            <img src="files/fileD_taf.png" style="width: 100%; height: 100%; object-fit: contain;">
+        </div>
+    </div>
+
+    <!-- 出典表示 -->
+    <div class="source-label">出典：気象庁</div>
+    <div class="source-label">1~3, 7~9, A~D｜航空気象情報：<a href="https://share.google/irVkEDerl4REYxFtY" target="_blank">https://share.google/irVkEDerl4REYxFtY</a></div>
+    <div class="source-label">11~13｜天気図：<a href="https://share.google/J26WCkM2IRb4l50gx" target="_blank">https://share.google/J26WCkM2IRb4l50gx</a></div>
+
+</body>
+</html>
